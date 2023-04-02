@@ -1,7 +1,10 @@
 #%%
 import pandas as pd
+import re
+import os
 
 df = pd.read_excel('./../data/derived/articles.xlsx')
+
 #%%
 # how many words are in the corpus?
 df.drop_duplicates(subset='a_text', inplace=True)
@@ -31,4 +34,18 @@ for url in df['a_image']:
         print(f'Error {e} downloading image {url}')
     
 
+# %%
+# save new dataframe
+
+df['a_title'] = df['a_title'].astype(str)
+
+def clean_title(title):
+    # Remove non-letter characters and replace spaces with '_'
+    title = re.sub(r'[^a-zA-Z\s]', '', title).replace(' ', '')
+    # Limit to first 20 characters
+    title = title[:20]
+    return title
+
+df['clean_title'] = df['a_title'].apply(clean_title)
+df.to_excel('./../data/derived/03_articles.xlsx')
 # %%
