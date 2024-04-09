@@ -46,6 +46,7 @@ sns.histplot(data=df, x='text_length', hue='bias', kde=True, element='step', pal
 plt.title('Distribution of Text Lengths by Bias')
 plt.xlabel('Text Length')
 plt.ylabel('Frequency')
+plt.savefig('./../figures/textlength.png', dpi=300, bbox_inches='tight')
 plt.show()
 # %%
 plt.figure(figsize=(10, 6))
@@ -54,12 +55,11 @@ sns.histplot(data=df, x='text_length', hue='bias', kde=True, element='step',
 plt.title('Percentage Distribution of Text Lengths by Bias')
 plt.xlabel('Text Length')
 plt.ylabel('Density')
+plt.savefig('./../figures/textdensity.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # %%
 import textstat
-
-# Assuming df is your DataFrame and 'a_text' is the column of interest
 
 # Calculate the Flesch Reading Ease score for each text entry
 df['reading_level'] = df['a_text'].apply(textstat.flesch_reading_ease)
@@ -72,6 +72,7 @@ sns.histplot(data=df, x='reading_level', hue='bias', kde=True, element='step',
 plt.title('Distribution of Flesch Reading Ease Scores by Bias')
 plt.xlabel('Flesch Reading Ease Score')
 plt.ylabel('Density')
+plt.savefig('./../figures/readingEase.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # %%
@@ -84,6 +85,7 @@ sns.histplot(data=df, x='reading_grade_level', hue='bias', kde=True, element='st
 plt.title('Distribution of Flesch-Kincaid Reading Grade Levels by Bias')
 plt.xlabel('Flesch-Kincaid Reading Grade Level')
 plt.ylabel('Density')
+plt.savefig('./../figures/gradeLevel.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -117,6 +119,7 @@ plt.xlabel('Polarity')
 plt.ylabel('Density')
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles=handles[1:], labels=labels[1:], title='Bias')
+plt.savefig('./../figures/polarity.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # Subjectivity distribution
@@ -126,6 +129,7 @@ plt.title('Distribution of Subjectivity Scores by Bias')
 plt.xlabel('Subjectivity')
 plt.ylabel('Density')
 plt.legend(title='Bias')
+plt.savefig('./../figures/subjectivity.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # %%
@@ -177,7 +181,7 @@ d_df = pd.DataFrame(list(d_entity_percentages.items()), columns=['Entity Type', 
 
 # Plotting
 fig, axes = plt.subplots(1, 2, figsize=(18, 8), sharey=True)
-fig.suptitle('Percentage Distribution of Named Entity Types by Bias')
+fig.suptitle('Percentage Distribution of Named Entity Types by Bias', size=25)
 
 # Plot for 'R' bias
 sns.barplot(x='Percentage', y='Entity Type', data=r_df, ax=axes[0], color='red')
@@ -196,6 +200,7 @@ axes[1].set_xticks([0, 5, 10, 15, 20])
 add_percentage_labels(axes[1], d_df)
 
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.savefig('./../figures/NER.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 # %%
@@ -204,7 +209,6 @@ plt.show()
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 
-# Assuming 'df' is your DataFrame and it's already preprocessed
 # Splitting the dataset based on 'bias'
 df_r = df[df['bias'] == 'R']['a_text']
 df_d = df[df['bias'] == 'D']['a_text']
@@ -236,3 +240,4 @@ apply_lda(df_r, n_topics=n_topics)
 # Perform LDA for 'D' bias
 print("\nTopics for 'D' Bias:\n")
 apply_lda(df_d, n_topics=n_topics)
+# %%
