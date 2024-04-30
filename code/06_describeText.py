@@ -1,7 +1,6 @@
 #%%
 import pandas as pd
 # %%
-
 df = pd.read_json('./../data/derived/04_partison.json')
 df = df.loc[df['a_text'].str.len().between(500, 20000)]
 df.drop_duplicates(subset=['a_text'], inplace=True)
