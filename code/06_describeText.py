@@ -103,7 +103,6 @@ def calculate_sentiment(text):
 df['sentiment'] = df['a_text'].apply(lambda x: calculate_sentiment(x))
 
 # The sentiment column will now have tuples of the form (polarity, subjectivity)
-# You can split these into separate columns if desired
 df['polarity'] = df['sentiment'].apply(lambda x: x.polarity)
 df['subjectivity'] = df['sentiment'].apply(lambda x: x.subjectivity)
 
